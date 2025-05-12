@@ -2,16 +2,17 @@
 
 Repo layout:
 MTDAsAServicePoC/  
->── modules/  
+> ── modules/  
 >>   └── agent_mgmt/  
 >>>       ├── main.tf  
 >>>       ├── variables.tf  
 >>>       └── outputs.tf  
->── infra/  
+> ── infra/  
 >>   ├── provider.tf  
 >>   ├── backend.tf
->>   └── main.tf          ← calls module.agent_mgmt (and others)  
->── .github/  
+>>   └── main.tf          ← calls module.agent_mgmt (and others)
+
+> ── .github/  
 >>   └── workflows/  
 >>>      └── ci.yml  
 # Deploy
