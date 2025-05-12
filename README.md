@@ -3,17 +3,17 @@
 Repo layout:
 MTDAsAServicePoC/  
 ├── modules/  
-│   └── agent_mgmt/  
-│       ├── main.tf  
-│       ├── variables.tf  
-│       └── outputs.tf  
+│&nbsp;&nbsp;&nbsp;└── agent_mgmt/  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── main.tf  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── variables.tf  
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── outputs.tf  
 ├── infra/  
-│   ├── provider.tf  
-│   ├── backend.tf  
-│   └── main.tf          ← calls module.agent_mgmt (and others)  
+│&nbsp;&nbsp;&nbsp;├── provider.tf  
+│&nbsp;&nbsp;&nbsp;├── backend.tf  
+│&nbsp;&nbsp;&nbsp;└── main.tf          ← calls module.agent_mgmt (and others)  
 └── .github/  
-    └── workflows/  
-        └── ci.yml  
+ &nbsp;&nbsp;&nbsp;└── workflows/  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ci.yml  
 # Deploy
 ```
 git clone https://github.com/tyshoo/MTDAsAServicePoC
