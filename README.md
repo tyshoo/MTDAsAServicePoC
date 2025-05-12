@@ -2,9 +2,9 @@
 
 Repo layout:
 MTDAsAServicePoC/  
-├── modules/  
-│   └── agent_mgmt/  
-│       ├── main.tf  
+>├── modules/  
+>>│   └── agent_mgmt/  
+>>>│       ├── main.tf  
 │       ├── variables.tf  
 │       └── outputs.tf  
 ├── infra/  
