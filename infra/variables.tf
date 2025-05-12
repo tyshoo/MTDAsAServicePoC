@@ -26,3 +26,10 @@ variable "stage_name" {
   description = "API Gateway stage"
   default     = "poc"
 }
+
+#dashboards_siem
+variable "dashboard_name" {
+  description = "Name of the CloudWatch Dashboard"
+  type        = string
+  default     = "poc-mtd-dashboard"   # USER INPUT if you want another name
+}
