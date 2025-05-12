@@ -12,8 +12,8 @@ MTDAsAServicePoC/
 &nbsp;│&nbsp;&nbsp;&nbsp;├── backend.tf  
 &nbsp;│&nbsp;&nbsp;&nbsp;└── main.tf          ← calls module.agent_mgmt (and others)  
 └── .github/  
- &nbsp;&nbsp;&nbsp;└── workflows/  
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ci.yml  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── workflows/  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── ci.yml  
 # Deploy
 ```
 git clone https://github.com/tyshoo/MTDAsAServicePoC
