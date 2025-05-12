@@ -11,3 +11,10 @@ module "ingestion" {
   api_name           = var.api_name                 # from infra/variables.tf
   stage_name         = var.stage_name               # typically "poc"
 }
+
+module "dashboards_siem" {
+  source              = "../modules/dashboards_siem"
+  environment         = var.environment
+  dashboard_name      = var.dashboard_name
+  lambda_function_name = module.ingestion.lambda_function_name
+}
