@@ -1,0 +1,73 @@
+name: "CI/CD - Terraform Deploy"
+
+on:
+  push:
+    branches:
+      - main
+      - poc
+      - dev
+      - staging
+      - prod
+
+env:
+  TF_WORKING_DIR: infra
+
+jobs:
+  terraform:
+    name: Terraform Plan & Apply
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIR }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}   # If using Terraform Cloud
+
+      - name: Setup AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}        # USER SETUP
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}# USER SETUP
+          aws-region: ap-southeast-1
+
+      - name: Terraform Init
+        run: terraform init \
+          -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}"      # USER SETUP
+          -backend-config="key=${{ github.ref_name }}/terraform.tfstate" \
+          -backend-config="region=ap-southeast-1"
+
+      - name: Terraform Fmt
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: tfsec Scan
+        uses: aquasecurity/tfsec-action@v1
+
+      - name: Checkov Scan
+        uses: bridgecrewio/checkov-action@v12
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -input=false -var="environment=${{ github.ref_name }}"
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' || github.ref_name == 'poc'
+        run: terraform apply -auto-approve -input=false -var="environment=${{ github.ref_name }}"
+
+#🔑 USER SETUP / INPUT
+# GitHub Secrets:
+# AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+# TF_STATE_BUCKET (your S3 bucket for remote state)
+# If using Terraform Cloud: TF_API_TOKEN
+# Branches & Environments:
+# The workflow runs on pushes to main, poc, dev, staging, prod.
+# It passes the branch name as environment into Terraform (-var="environment=...").
