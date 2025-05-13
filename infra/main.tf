@@ -18,3 +18,10 @@ module "dashboards_siem" {
   dashboard_name      = var.dashboard_name
   lambda_function_name = module.ingestion.lambda_function_name
 }
+
+module "security_guardrails" {
+  source          = "../modules/security_guardrails"
+  environment     = var.environment
+  config_rule_name = var.config_rule_name       # from infra/variables.tf
+  cloudtrail_name  = var.cloudtrail_name        # from infra/variables.tf
+}
