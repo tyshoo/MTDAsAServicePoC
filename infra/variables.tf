@@ -33,3 +33,16 @@ variable "dashboard_name" {
   type        = string
   default     = "poc-mtd-dashboard"   # USER INPUT if you want another name
 }
+
+#security_guardrails
+variable "config_rule_name" {
+  description = "Name for AWS Config rule (S3 encryption)"
+  type        = string
+  default     = "poc-s3-encryption-rule"   # USER INPUT
+}
+
+variable "cloudtrail_name" {
+  description = "Name for the CloudTrail audit trail"
+  type        = string
+  default     = "poc-mtd-trail"            # USER INPUT
+}
