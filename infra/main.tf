@@ -25,3 +25,12 @@ module "security_guardrails" {
   config_rule_name = var.config_rule_name       # from infra/variables.tf
   cloudtrail_name  = var.cloudtrail_name        # from infra/variables.tf
 }
+
+#tags
+module "tags" {
+  source      = "../modules/tags"
+  environment = var.environment      # e.g. "poc"
+  project     = "mtd-edr"
+  owner       = "SecOpsTeam"
+  cost_center = "CC1234"
+}
