@@ -1,6 +1,11 @@
 variable "environment" {
-  description = "poc"
+  description = "Deployment environment (poc, dev, prod)"
   type        = string
+}
+
+variable "common_tags" {
+  description = "Map of common tags from tags module"
+  type        = map(string)
 }
 
 variable "config_rule_name" {
