@@ -18,10 +18,12 @@ module "ingestion" {
 }
 
 module "dashboards_siem" {
-  source              = "../modules/dashboards_siem"
-  environment         = var.environment
-  dashboard_name      = var.dashboard_name
+  source               = "../modules/dashboards_siem"
+  environment          = var.environment
+  common_tags          = module.tags.common_tags
+  dashboard_name       = var.dashboard_name
   lambda_function_name = module.ingestion.lambda_function_name
+  sns_topic_arn        = module.ingestion.sns_alerts_topic_arn
 }
 
 module "security_guardrails" {
