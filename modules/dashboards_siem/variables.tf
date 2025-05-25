@@ -1,6 +1,11 @@
 variable "environment" {
-  description = "poc"
+  description = "Deployment environment (poc, dev, prod)"
   type        = string
+}
+
+variable "common_tags" {
+  description = "Map of common tags from tags module"
+  type        = map(string)
 }
 
 variable "dashboard_name" {
@@ -12,5 +17,9 @@ variable "dashboard_name" {
 variable "lambda_function_name" {
   description = "Name of the ingestion Lambda to monitor"
   type        = string
-  # USER INPUT: must match your ingestion.lambda_function_name
+}
+
+variable "sns_topic_arn" {
+  description = "SNS Topic ARN for alerts"
+  type        = string
 }
