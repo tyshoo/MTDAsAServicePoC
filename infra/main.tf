@@ -27,10 +27,11 @@ module "dashboards_siem" {
 }
 
 module "security_guardrails" {
-  source          = "../modules/security_guardrails"
-  environment     = var.environment
-  config_rule_name = var.config_rule_name       # from infra/variables.tf
-  cloudtrail_name  = var.cloudtrail_name        # from infra/variables.tf
+  source           = "../modules/security_guardrails"
+  environment      = var.environment
+  common_tags      = module.tags.common_tags
+  config_rule_name = var.config_rule_name
+  cloudtrail_name  = var.cloudtrail_name
 }
 
 #tags
