@@ -1,9 +1,15 @@
 variable "environment" {
-  description = "PoC Environment (Free-tier)"
+  description = "Deployment environment (poc, dev, prod)"
   type        = string
 }
 
 variable "agent_bucket_name" {
-  description = "<<Insert Name for S3 bucket hosting agent binaries>>"
+  description = "S3 bucket name for agent binaries"
   type        = string
+  # USER INPUT: e.g. "poc-agent-binaries"
+}
+
+variable "common_tags" {
+  description = "Map of common tags from the tags module"
+  type        = map(string)
 }
