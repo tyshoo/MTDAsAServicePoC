@@ -6,11 +6,15 @@ module "agent_mgmt" {
 }
 
 module "ingestion" {
-  source             = "../modules/ingestion"
-  environment        = var.environment
-  lambda_function_name = var.lambda_function_name   # from infra/variables.tf
-  api_name           = var.api_name                 # from infra/variables.tf
-  stage_name         = var.stage_name               # typically "poc"
+  source              = "../modules/ingestion"
+  environment         = var.environment
+  common_tags         = module.tags.common_tags
+  lambda_function_name = var.lambda_function_name
+  api_name            = var.api_name
+  stage_name          = var.stage_name
+  vpc_id              = module.network.vpc_id             # from network module
+  private_subnet_ids  = module.network.private_subnets    # from network module
+  web_acl_arn         = module.network.waf_web_acl_arn    # from network module (optional)
 }
 
 module "dashboards_siem" {
