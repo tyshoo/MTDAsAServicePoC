@@ -1,23 +1,19 @@
-# Construct widget definitions for Invocations and Errors
+data "aws_region" "current" {}
+
+# Build widgets for Lambda Invocations & Errors
 locals {
   lambda_metrics = [
     {
-      id        = "invocations"
-      label     = "Invocations"
-      metric    = ["AWS/Lambda", "Invocations", "FunctionName", var.lambda_function_name]
-      y         = 0
-      x         = 0
-      width     = 12
-      height    = 6
+      id     = "invocations"
+      label  = "Invocations"
+      metric = ["AWS/Lambda", "Invocations", "FunctionName", var.lambda_function_name]
+      x      = 0; y = 0; width = 12; height = 6
     },
     {
-      id        = "errors"
-      label     = "Errors"
-      metric    = ["AWS/Lambda", "Errors", "FunctionName", var.lambda_function_name]
-      y         = 0
-      x         = 12
-      width     = 12
-      height    = 6
+      id     = "errors"
+      label  = "Errors"
+      metric = ["AWS/Lambda", "Errors", "FunctionName", var.lambda_function_name]
+      x      = 12; y = 0; width = 12; height = 6
     }
   ]
 
@@ -32,18 +28,24 @@ locals {
         metrics = [m.metric]
         period  = 300
         stat    = "Sum"
-        region  = "${data.aws_region.current.name}"
+        region  = data.aws_region.current.name
         title   = m.label
       }
     }
   ]
 }
 
-data "aws_region" "current" {}
-
 resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = var.dashboard_name  # USER INPUT
-  dashboard_body = jsonencode({
-    widgets = local.widgets
-  })
+  dashboard_name = var.dashboard_name
+  dashboard_body = jsonencode({ widgets = local.widgets })
+  tags           = var.common_tags
+}
+
+# (Optional) SNS subscription stub for alarms
+# USER: create subscriptions on this topic for SOC emails
+resource "aws_sns_topic_subscription" "soc_email" {
+  count      = length(var.sns_topic_arn) > 0 ? 1 : 0
+  topic_arn  = var.sns_topic_arn
+  protocol   = "email"
+  endpoint   = "ops@example.com"  # USER INPUT: SOC email address
 }
